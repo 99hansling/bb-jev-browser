@@ -1,0 +1,15 @@
+{
+  "name": "bb-jev-browser",
+  "version": "0.1.0",
+  "description": "Real Chrome login state (bb-browser) + TypeSafe Jev choice layer, with legacy snapshot/ref fallback",
+  "type": "module",
+  "bin": {
+    "bb-jev": "./bin/bb-jev.mjs"
+  },
+  "scripts": {
+    "start": "node ./bin/bb-jev.mjs",
+    "doctor": "node ./scripts/doctor.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}
