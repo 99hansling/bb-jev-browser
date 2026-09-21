@@ -9,7 +9,19 @@ import { pathToFileURL } from "node:url";
 
 const BB = process.env.BB_BROWSER_BIN || "bb-browser";
 const API = process.env.TYPESAFE_API_URL || "https://api.typesafe.ai/v1/systemone";
-const KEY = process.env.TYPESAFE_API_KEY || "";
+function loadTypesafeKey() {
+  if (process.env.TYPESAFE_API_KEY) return process.env.TYPESAFE_API_KEY;
+  // Global local default: macOS Keychain service "typesafe", account = $USER
+  const account = process.env.USER || process.env.LOGNAME || "";
+  const r = spawnSync(
+    "security",
+    ["find-generic-password", "-a", account, "-s", "typesafe", "-w"],
+    { encoding: "utf8" },
+  );
+  if (r.status === 0 && r.stdout) return r.stdout.trim();
+  return "";
+}
+const KEY = loadTypesafeKey();
 const CONF_FALLBACK = Number(process.env.BB_JEV_MIN_CONF || "0.45");
 
 function sh(cmd, args, opts = {}) {
@@ -112,7 +124,7 @@ Env:
   if (cmd === "doctor") {
     const which = sh("bash", ["-lc", `command -v ${BB} || true`]);
     console.log("bb-browser:", (which.stdout || "").trim() || "NOT FOUND");
-    console.log("TYPESAFE_API_KEY:", KEY ? "set" : "MISSING (Jev path inert; fallback only)");
+    console.log("TYPESAFE_API_KEY:", KEY ? "set (env or Keychain service=typesafe)" : "MISSING — run scripts/store-typesafe-key-keychain.sh");
     process.exit(0);
   }
 
