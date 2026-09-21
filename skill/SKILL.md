@@ -1,6 +1,6 @@
 ---
 name: bb-jev-browser
-description: "Use when a browser task needs the user's real logged-in Chrome AND cheap closed-set next-step choice via TypeSafe Jev — bb-browser for identity/execution, Jev Choice primary, legacy ref heuristics as fallback. Triggers: bb-jev, logged-in Chrome + Jev, 真实登录态+Jev. Needs bb-browser on PATH and optional TYPESAFE_API_KEY. NOT a swap for bb-browser alone or Playwright-only jev-browser."
+description: "Use when a browser task needs the user's real logged-in Chrome AND cheap closed-set next-step choice via TypeSafe Jev — bb-browser for identity/execution, Jev Choice primary, legacy ref heuristics as fallback. Triggers: bb-jev, logged-in Chrome + Jev, 真实登录态+Jev. Needs bb-browser on PATH and optional TYPESAFE_API_KEY. Use this (not jev-browser) for Cloudflare-protected sites. NOT a swap for bb-browser alone or Playwright-only jev-browser."
 ---
 
 # bb-jev-browser
@@ -12,6 +12,12 @@ Local: `~/Documents/bb-jev-browser`
 
 - Need **user's real login** (cookies / dashboards / X / Gmail-like) **and** many interactive steps.
 - Want Jev to pick from a closed ref table; keep old snapshot→ref logic if Jev is down.
+
+
+## When Cloudflare / login walls appear
+
+This skill is the default for **Cloudflare-protected** or **real-login** browsing.  
+Do **not** fall back to `jev-browser` / `jev-ultrafast` on those sites — they see a fresh automation browser and get blocked. Use local/non-CF targets only for those tools.
 
 ## Do not
 
